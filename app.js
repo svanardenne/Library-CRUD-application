@@ -17,7 +17,7 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
@@ -42,6 +42,7 @@ app.use((err, req, res, next) => {
   } else {
     err.message = "Sorry! There was an unexpected error on the server."
     err.status = 500;
+    console.log(err.status, err.message);
     res.render('error', {err});
   }
 

@@ -2,6 +2,9 @@ extends layout
 
 block content
   h1 New Book
+
+  include errors
+
   form(action="/books/new", method="POST")
     p
       label(for="title") Title
@@ -18,4 +21,4 @@ block content
     p
       input(type="submit" value="Create New Book")
     p
-      a.button(href="all_books.html") Cancel
+      a.button(href="/books") Cancel

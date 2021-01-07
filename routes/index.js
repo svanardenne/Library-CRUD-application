@@ -4,7 +4,7 @@ const Book = require('../models').Book;
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  // res.render('index', { title: 'Express' });
+  throw new Error();
     res.redirect('/books');
 });
 

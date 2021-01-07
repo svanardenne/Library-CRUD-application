@@ -25,7 +25,7 @@ app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  const err = new Error(`Sorry, we can't find what you are looking for.`);
+  const err = new Error(`Sorry! We couldn't find the page you were looking for.`);
   err.status = 404;
   next(err)
 });
@@ -33,12 +33,18 @@ app.use((req, res, next) => {
 // error handler
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
-  if(!err.message && !err.status) {
-    err.message = "Oops, something went wrong."
+  if(err.status) {
+    if(err.status === 404) {
+      res.render('page-not-found', {err});
+    } else {
+      res.render('error', {err});
+    }
+  } else {
+    err.message = "Sorry! There was an unexpected error on the server."
     err.status = 500;
+    res.render('error', {err});
   }
-  // render the error page
-  res.render('error', {err});
+
 });
 
 module.exports = app;

@@ -2,8 +2,15 @@ extends layout
 
 block content
   h1 Books
-  p
-    a.button(href="/books/new") Create New Book
+  div.main-links
+    p
+      a.button(href="/books/new") Create New Book
+    p
+      a.button(href="/books") Show All
+  form.search-input(action="/books/search", method="POST")
+    input(type="text", name="query")
+    input.search-submit(type="submit", value="Submit")
+
   table
     thead
       tr

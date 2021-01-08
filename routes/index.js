@@ -14,6 +14,7 @@ router.get('/books', async (req, res) => {
   res.render('index', {books});
 });
 
+// Search route
 router.post('/books/search', async (req, res) => {
   const books = await Book.findAll({
     where: {

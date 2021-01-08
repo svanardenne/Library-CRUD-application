@@ -7,15 +7,18 @@ router.get('/', (req, res) => {
     res.redirect('/books');
 });
 
+// Main book list
 router.get('/books', async (req, res) => {
   const books = await Book.findAll();
   res.render('index', {books});
 });
 
+// New book form page
 router.get('/books/new', (req, res) => {
   res.render('new-book');
 });
 
+// New book submit
 router.post('/books/new', async (req, res) => {
   let book;
   try {
@@ -31,11 +34,13 @@ router.post('/books/new', async (req, res) => {
   }
 });
 
+// Book Update and Delete Page
 router.get('/books/:id', async (req, res) => {
   const book = await Book.findByPk(req.params.id);
   res.render('update-book', {id: req.params.id, book});
 });
 
+// Book Update submit
 router.post('/books/:id', async (req, res) => {
   let book;
   try {
@@ -56,6 +61,7 @@ router.post('/books/:id', async (req, res) => {
   }
 });
 
+// Book Delete submit
 router.post('/books/:id/delete', async (req, res) => {
   const book = await Book.findByPk(req.params.id);
   try {

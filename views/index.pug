@@ -11,18 +11,21 @@ block content
     input(type="text", name="query")
     input.search-submit(type="submit", value="Submit")
 
-  table
-    thead
-      tr
-        th Title
-        th Author
-        th Genre
-        th Year
-    tbody
-      each book in books
+  if(books.length > 0)
+    table
+      thead
         tr
-          td
-            a(href=`/books/${book.id}`) #{book.title}
-          td #{book.author}
-          td #{book.genre}
-          td #{book.year}
+          th Title
+          th Author
+          th Genre
+          th Year
+      tbody
+        each book in books
+          tr
+            td
+              a(href=`/books/${book.id}`) #{book.title}
+            td #{book.author}
+            td #{book.genre}
+            td #{book.year}
+  else
+    include no-results

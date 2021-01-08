@@ -25,7 +25,6 @@ router.post('/books/search', async (req, res) => {
       ]
     }
   });
-  console.log(books);
   res.render('index', {books});
 });
 

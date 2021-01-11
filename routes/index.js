@@ -5,22 +5,24 @@ const Op = require('sequelize').Op;
 
 /* GET home page. */
 router.get('/', (req, res) => {
-    res.redirect('/books/?page=1');
+    res.redirect('/books/?page=0');
 });
 
 // Main book list
 router.get('/books', async (req, res) => {
   const {count, rows} = await Book.findAndCountAll({
     offset: parseInt(req.query.page) * 8,
-    limit: 8
+    limit: 8,
   });
   const pagination = count / 8;
   res.render('index', {count, rows, pagination});
 });
 
 // Search route
-router.post('/books/search', async (req, res) => {
-  const books = await Book.findAll({
+router.post('/books', async (req, res) => {
+  const {count, rows} = await Book.findAndCountAll({
+    offset: parseInt(req.query.page) * 8,
+    limit: 8,
     where: {
       [Op.or]: [
         {title: {[Op.like]: `%${req.body.query}%`}},
@@ -30,7 +32,8 @@ router.post('/books/search', async (req, res) => {
       ]
     }
   });
-  res.render('index', {books});
+  const pagination = count / 8;
+  res.render('index', {count, rows, pagination});
 });
 
 // New book form page
@@ -43,7 +46,7 @@ router.post('/books/new', async (req, res) => {
   let book;
   try {
     book = await Book.create(req.body);
-    res.redirect(`/books/`);
+    res.redirect(`/books/?page=0`);
   } catch(error) {
     if(error.name === "SequelizeValidationError") { // checking the error
       book = await Book.build(req.body);
@@ -67,7 +70,7 @@ router.post('/books/:id', async (req, res) => {
     book = await Book.findByPk(req.params.id);
     if(book) {
       await book.update(req.body);
-      res.redirect("/books");
+      res.redirect("/books/?page=0");
     } else {
       res.sendStatus(404);
     }
@@ -87,7 +90,7 @@ router.post('/books/:id/delete', async (req, res) => {
   try {
     if(book) {
       await book.destroy();
-      res.redirect('/books');
+      res.redirect('/books/?page=0');
     } else {
       res.sendStatus(404);
     }

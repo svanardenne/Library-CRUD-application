@@ -118,12 +118,12 @@ form .search-submit {
   display: inline-block;
 }
 
-.page {
-  display: inline-block;
-  margin-right: 10px;
-}
-
 .active {
   background-color: #01b189;
   color: white;
+}
+
+.link-list-item {
+  display: inline-block;
+  margin-right: 10px;
 }

@@ -31,7 +31,7 @@ block content
     - var i = 1;
     ul
       while i < pagination + 1
-        li.page
-          a(href=`/books/?page=${i-1}`)=i++
+        li.link-list-item
+          a.page-links(href=`/books/?page=${i-1}`)=i++
   else
     include no-results

@@ -108,3 +108,22 @@ input[type=text] {
 form .search-submit {
   margin-left: 0;
 }
+
+.hidden {
+  display: none;
+}
+
+.main-links p,
+.main-links form {
+  display: inline-block;
+}
+
+.page {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.active {
+  background-color: #01b189;
+  color: white;
+}

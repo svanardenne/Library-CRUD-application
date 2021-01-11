@@ -3,6 +3,8 @@ var router = express.Router();
 const Book = require('../models').Book;
 const Op = require('sequelize').Op;
 
+let searchValue = '';
+
 /* GET home page. */
 router.get('/', (req, res) => {
     res.redirect('/books/?page=0');
@@ -10,12 +12,29 @@ router.get('/', (req, res) => {
 
 // Main book list
 router.get('/books', async (req, res) => {
-  const {count, rows} = await Book.findAndCountAll({
-    offset: parseInt(req.query.page) * 8,
-    limit: 8,
-  });
-  const pagination = count / 8;
-  res.render('index', {count, rows, pagination});
+  if(searchValue === '') {
+    const {count, rows} = await Book.findAndCountAll({
+      offset: parseInt(req.query.page) * 8,
+      limit: 8,
+    });
+    const pagination = count / 8;
+    res.render('index', {count, rows, pagination});
+  } else {
+    const {count, rows} = await Book.findAndCountAll({
+      offset: parseInt(req.query.page) * 8,
+      limit: 8,
+      where: {
+        [Op.or]: [
+          {title: {[Op.like]: `%${searchValue}%`}},
+          {author: {[Op.like]: `%${searchValue}%`}},
+          {genre: {[Op.like]: `%${searchValue}%`}},
+          {year: {[Op.like]: `%${searchValue}%`}},
+        ]
+      }
+    });
+    const pagination = count / 8;
+    res.render('index', {count, rows, pagination});
+  }
 });
 
 // Search route
@@ -33,6 +52,7 @@ router.post('/books', async (req, res) => {
     }
   });
   const pagination = count / 8;
+  searchValue = req.body.query;
   res.render('index', {count, rows, pagination});
 });
 

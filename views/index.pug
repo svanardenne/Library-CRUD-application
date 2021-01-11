@@ -5,8 +5,9 @@ block content
   div.main-links
     p
       a.button(href="/books/new") Create New Book
-    p
-      a.button(href='/books/?page=0') Show All
+    form(action="/books/?page=0", method="POST")
+      input.hidden(type="text", name="query")
+      input.search-submit(type="submit", value="Reset")
   form.search-input(action="/books/?page=0", method="POST")
     input(type="text", name="query")
     input.search-submit(type="submit", value="Submit")
@@ -30,7 +31,7 @@ block content
     - var i = 1;
     ul
       while i < pagination + 1
-        li
+        li.page
           a(href=`/books/?page=${i-1}`)=i++
   else
     include no-results

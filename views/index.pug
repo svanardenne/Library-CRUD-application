@@ -11,7 +11,7 @@ block content
     input(type="text", name="query")
     input.search-submit(type="submit", value="Submit")
 
-  if(books.length > 0)
+  if(rows.length > 0)
     table
       thead
         tr
@@ -20,12 +20,17 @@ block content
           th Genre
           th Year
       tbody
-        each book in books
+        each row in rows
           tr
             td
-              a(href=`/books/${book.id}`) #{book.title}
-            td #{book.author}
-            td #{book.genre}
-            td #{book.year}
+              a(href=`/books/${row.id}`) #{row.title}
+            td #{row.author}
+            td #{row.genre}
+            td #{row.year}
+    - var i = 1;
+    ul
+      while i < pagination + 1
+        li
+          a(href=`/books/?page=${i-1}`)=i++
   else
     include no-results

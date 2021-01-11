@@ -5,13 +5,17 @@ const Op = require('sequelize').Op;
 
 /* GET home page. */
 router.get('/', (req, res) => {
-    res.redirect('/books');
+    res.redirect('/books/?page=1');
 });
 
 // Main book list
 router.get('/books', async (req, res) => {
-  const books = await Book.findAll();
-  res.render('index', {books});
+  const {count, rows} = await Book.findAndCountAll({
+    offset: parseInt(req.query.page) * 8,
+    limit: 8
+  });
+  const pagination = count / 8;
+  res.render('index', {count, rows, pagination});
 });
 
 // Search route

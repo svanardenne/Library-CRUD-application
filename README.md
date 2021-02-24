@@ -16,4 +16,4 @@ Uses Node, Express, Pug, SQLite3 and Sequelize as well as some front end JavaScr
   - Start the application with ```npm start```
   - Point your browser to localhost:3000
 
-[Live Site](https://stormy-waters-08943.herokuapp.com/books/?page=0)
+## [Live Site](https://stormy-waters-08943.herokuapp.com/books/?page=0)
